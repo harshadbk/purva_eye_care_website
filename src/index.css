@@ -34,6 +34,11 @@
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
+
+    /* The two-row navbar on 1024–1279px laptops is taller */
+    @media (min-width: 64rem) and (max-width: 79.99rem) {
+      scroll-padding-top: 8rem;
+    }
   }
 
   body {
