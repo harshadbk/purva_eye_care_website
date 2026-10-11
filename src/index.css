@@ -1,0 +1,101 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Noto Sans Devanagari', 'Noto Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Palette drawn from the clinic signboard: navy band, teal/blue logo, red lettering */
+  --color-navy-50: #eef2fb;
+  --color-navy-100: #d9e1f5;
+  --color-navy-200: #b3c3ea;
+  --color-navy-600: #2346a3;
+  --color-navy-700: #1d3a8a;
+  --color-navy-800: #172e6e;
+  --color-navy-900: #111f4d;
+  --color-navy-950: #0b1533;
+
+  --color-teal-50: #ecfbfc;
+  --color-teal-100: #cdf2f5;
+  --color-teal-500: #13a3b4;
+  --color-teal-600: #0e8797;
+  --color-teal-700: #0d6c7a;
+
+  --color-brand-red: #c8102e;
+  --color-brand-red-soft: #fdecee;
+
+  --color-whatsapp: #128c4a;
+  --color-whatsapp-dark: #0e6f3a;
+
+  --shadow-card: 0 1px 2px rgb(17 31 77 / 0.04), 0 8px 24px -12px rgb(17 31 77 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(17 31 77 / 0.05), 0 18px 40px -16px rgb(17 31 77 / 0.22);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white font-sans text-slate-700 antialiased;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply text-navy-900;
+    line-height: 1.35;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-teal-500);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-base font-semibold transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-primary {
+    @apply bg-navy-700 text-white hover:bg-navy-800;
+  }
+
+  .btn-outline {
+    @apply border-2 border-navy-700 bg-white text-navy-700 hover:bg-navy-50;
+  }
+
+  .btn-whatsapp {
+    @apply bg-whatsapp text-white hover:bg-whatsapp-dark;
+  }
+
+  .btn-red {
+    @apply bg-brand-red text-white hover:bg-[#a50d26];
+  }
+
+  .card {
+    @apply rounded-2xl border border-slate-200/80 bg-white shadow-card;
+  }
+
+  .field-input {
+    @apply block min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-base text-navy-950 placeholder:text-slate-400 transition-colors focus:border-teal-600 focus:ring-2 focus:ring-teal-500/30 focus:outline-none aria-[invalid=true]:border-brand-red;
+  }
+}
