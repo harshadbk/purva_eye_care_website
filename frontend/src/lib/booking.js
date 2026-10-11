@@ -1,6 +1,7 @@
 // Appointment booking logic, kept separate from the UI so a backend API
 // can replace the WhatsApp flow later without touching the form component.
 import { clinic, whatsappLink } from '../data/clinic'
+import { API_URL } from './api'
 
 const PHONE_RE = /^[6-9]\d{9}$/
 
@@ -29,7 +30,7 @@ export function validateAppointment(values) {
   return errors
 }
 
-function formatDate(iso, lang) {
+export function formatDate(iso, lang) {
   const [y, m, d] = iso.split('-').map(Number)
   return new Date(y, m - 1, d).toLocaleDateString(lang === 'en' ? 'en-IN' : 'mr-IN', {
     weekday: 'long',
@@ -66,9 +67,25 @@ export function buildAppointmentMessage(values, labels, lang) {
   return lines.join('\n')
 }
 
-// Current channel: WhatsApp deep link. Swap the body for an API call later,
-// keeping the same return shape ({ channel, url? }).
-export async function submitAppointment(values, labels, lang) {
+// Records the request in the clinic's database (backend/server.js) so it shows up
+// in the admin panel. Failures are swallowed: WhatsApp alone still reaches the clinic.
+async function saveAppointment(values, labels, lang) {
+  try {
+    const res = await fetch(`${API_URL}/api/appointments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...values, phone: normalizePhone(values.phone), reasonLabel: labels.reason, lang }),
+    })
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
+// Synchronous on purpose: the caller must open WhatsApp inside the click handler,
+// or mobile browsers block it. The database save runs in the background.
+export function submitAppointment(values, labels, lang) {
   const url = whatsappLink(buildAppointmentMessage(values, labels, lang))
-  return { channel: 'whatsapp', url }
+  const saved = saveAppointment(values, labels, lang)
+  return { channel: 'whatsapp', url, saved }
 }

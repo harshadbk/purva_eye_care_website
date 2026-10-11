@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { CalendarCheck, Glasses, MapPin, Phone, ScanEye, UserRound } from 'lucide-react'
+import { ArrowRight, CalendarCheck, Glasses, HeartHandshake, MapPin, Phone, ScanEye, UserRound } from 'lucide-react'
 import { content } from '../data/content'
 import { clinic, telLink } from '../data/clinic'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -40,6 +40,20 @@ export default function Hero() {
               {t(h.secondary)} · {clinic.phones[0].display}
             </a>
           </div>
+
+          <a
+            href="#cataract"
+            className="group mt-6 flex items-center gap-3 rounded-2xl border border-brand-red/25 bg-brand-red-soft px-4 py-3 transition-colors hover:border-brand-red/50"
+          >
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-red text-white">
+              <HeartHandshake className="size-5" aria-hidden="true" />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-xs font-bold tracking-wide text-brand-red uppercase">{t(content.cataractCare.badge)}</span>
+              <span className="block text-sm font-semibold text-navy-900 sm:text-base">{t(content.cataractCare.heroLine)}</span>
+            </span>
+            <ArrowRight className="size-5 shrink-0 text-brand-red transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          </a>
 
           <p className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-600">
             <MapPin className="size-4 shrink-0 text-brand-red" aria-hidden="true" />

@@ -1,0 +1,18 @@
+{
+  "name": "purva-eye-care-backend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "API for Purva Eye Care Center: stores appointment requests and powers the admin panel.",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=22.9"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0"
+  }
+}

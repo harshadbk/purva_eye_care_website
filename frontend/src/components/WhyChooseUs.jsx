@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
-import { Glasses, MapPin, MessagesSquare, PhoneCall, Users } from 'lucide-react'
+import { Glasses, HeartHandshake, MapPin, PhoneCall, Users } from 'lucide-react'
 import SectionHeading from './SectionHeading'
 import { content } from '../data/content'
 import { useLanguage } from '../i18n/LanguageContext'
 
-const icons = [MapPin, Users, Glasses, MessagesSquare, PhoneCall]
+const icons = [MapPin, Users, Glasses, HeartHandshake, PhoneCall]
 
 export default function WhyChooseUs() {
   const { t } = useLanguage()

@@ -60,8 +60,8 @@ export const content = {
     eyebrow: { mr: 'आमच्या सेवा', en: 'Our Services' },
     title: { mr: 'डोळ्यांच्या संपूर्ण काळजीसाठी सेवा', en: 'Services for complete eye care' },
     intro: {
-      mr: 'शस्त्रक्रियेशी संबंधित सेवांसाठी आम्ही तपासणी करून योग्य मार्गदर्शन व संदर्भ देतो.',
-      en: 'For surgical conditions we examine, advise and guide you to the right specialist care.',
+      mr: 'साध्या नेत्र तपासणीपासून मोतीबिंदू शस्त्रक्रियेपर्यंत — तुमच्या डोळ्यांची संपूर्ण काळजी एकाच ठिकाणी.',
+      en: 'From a simple eye test to cataract surgery: complete care for your eyes in one place.',
     },
     cta: { mr: 'चौकशी करा', en: 'Enquire' },
   },
@@ -70,8 +70,8 @@ export const content = {
     eyebrow: { mr: 'ऑप्टिकल स्टोअर', en: 'Optical Store' },
     title: { mr: 'नंबरचे चष्मे, फ्रेम्स, लेन्स आणि गॉगल्स', en: 'Spectacles, frames, lenses & goggles' },
     body: {
-      mr: 'तपासणीनंतर तुमच्या नंबरनुसार आणि आवडीनुसार चष्मा निवडण्यास आम्ही मदत करतो. सर्व प्रकारचे नंबरचे चष्मे व गॉगल्स होलसेलमध्येही उपलब्ध.',
-      en: 'After your eye test we help you choose eyewear that suits your prescription and your style. All types of prescription spectacles and goggles are also available wholesale.',
+      mr: 'तपासणीनंतर तुमच्या नंबरनुसार आणि आवडीनुसार चष्मा निवडण्यास आम्ही मदत करतो. सर्व प्रकारचे नंबरचे चष्मे व गॉगल्स स्वस्त दरात — होलसेलमध्येही उपलब्ध.',
+      en: 'After your eye test we help you choose eyewear that suits your prescription and your style. All types of prescription spectacles and goggles at affordable rates, also available wholesale.',
     },
     categories: [
       { mr: 'नंबरचे चष्मे', en: 'Prescription spectacles' },
@@ -110,12 +110,12 @@ export const content = {
         desc: { mr: 'लहान मुलांपासून ज्येष्ठांपर्यंत सर्व वयोगटांसाठी तपासणी.', en: 'Eye examinations for every age group.' },
       },
       {
-        title: { mr: 'नंबरचे चष्मे एकाच ठिकाणी', en: 'Prescription eyewear in one place' },
-        desc: { mr: 'तपासणीनंतर इथेच योग्य फ्रेम्स, लेन्स व गॉगल्स.', en: 'Frames, lenses and goggles available right after your test.' },
+        title: { mr: 'चष्मे स्वस्त दरात', en: 'Affordable eyewear' },
+        desc: { mr: 'तपासणीनंतर इथेच सर्व प्रकारचे नंबरचे चष्मे व गॉगल्स स्वस्त दरात.', en: 'All types of prescription glasses and goggles at affordable rates, right after your test.' },
       },
       {
-        title: { mr: 'तज्ज्ञ सल्ल्याबाबत मार्गदर्शन', en: 'Guidance on specialist care' },
-        desc: { mr: 'शस्त्रक्रिया किंवा पुढील उपचार लागल्यास योग्य मार्गदर्शन.', en: 'Clear direction if you need surgery or specialist treatment.' },
+        title: { mr: 'मोफत मोतीबिंदू शस्त्रक्रिया', en: 'Free cataract surgery' },
+        desc: { mr: 'आर्थिक दृष्ट्या दुर्बल नेत्र रुग्णांना मोफत मोतीबिंदू शस्त्रक्रिया सुविधा उपलब्ध.', en: 'Free cataract surgery facility for economically weaker eye patients.' },
       },
       {
         title: { mr: 'सहज संपर्क', en: 'Easy to reach' },
@@ -126,14 +126,14 @@ export const content = {
 
   appointment: {
     eyebrow: { mr: 'अपॉइंटमेंट', en: 'Appointment' },
-    title: { mr: 'अपॉइंटमेंटसाठी विनंती पाठवा', en: 'Request an appointment' },
+    title: { mr: 'स्पष्ट दृष्टीकडे पहिले पाऊल', en: 'Your first step to clearer vision' },
     intro: {
-      mr: 'फॉर्म भरा — तुमची माहिती WhatsApp संदेशात तयार होईल, तो फक्त पाठवा.',
-      en: 'Fill in the form and your details will be ready as a WhatsApp message. Just press send.',
+      mr: 'फक्त एक मिनिट — फॉर्म भरा आणि WhatsApp वर पाठवा. रांगेत थांबायची गरज नाही!',
+      en: 'It takes just a minute. Fill in the form and send it on WhatsApp, with no waiting in line!',
     },
     notice: {
-      mr: 'क्लिनिककडून उत्तर आल्यानंतरच अपॉइंटमेंट निश्चित होईल.',
-      en: 'Your appointment is confirmed only after the clinic replies.',
+      mr: 'आम्ही लवकरच WhatsApp वर उत्तर देऊन तुमची भेटीची वेळ निश्चित करू — तुमची वाट पाहतोय!',
+      en: 'We’ll reply on WhatsApp shortly to lock in your visit. We look forward to seeing you!',
     },
     fields: {
       name: { mr: 'रुग्णाचे नाव', en: 'Patient name' },
@@ -163,10 +163,10 @@ export const content = {
       reason: { mr: 'कृपया भेटीचे कारण निवडा.', en: 'Please choose a reason for your visit.' },
     },
     submit: { mr: 'WhatsApp वर विनंती पाठवा', en: 'Send request on WhatsApp' },
-    successTitle: { mr: 'WhatsApp उघडले आहे', en: 'WhatsApp is open' },
+    successTitle: { mr: 'जवळजवळ झाले!', en: 'Almost there!' },
     successBody: {
-      mr: 'तयार झालेला संदेश WhatsApp मध्ये पाठवा. क्लिनिककडून उत्तर आल्यावर अपॉइंटमेंट निश्चित होईल.',
-      en: 'Send the prepared message in WhatsApp. Your appointment is confirmed once the clinic replies.',
+      mr: 'WhatsApp मध्ये तयार संदेश फक्त ‘पाठवा’ दाबा. आम्ही लवकरच उत्तर देऊन तुमची वेळ पक्की करू — तुमच्या डोळ्यांची काळजी आता आमच्याकडे!',
+      en: 'Just tap ‘Send’ on the ready message in WhatsApp. We’ll reply soon to fix your time. Your eyes are in caring hands!',
     },
     reopen: { mr: 'WhatsApp पुन्हा उघडा', en: 'Open WhatsApp again' },
     newRequest: { mr: 'नवीन विनंती', en: 'New request' },
@@ -288,8 +288,8 @@ export const content = {
       {
         q: { mr: 'अपॉइंटमेंट कशी घ्यावी?', en: 'How do I book an appointment?' },
         a: {
-          mr: 'वेबसाइटवरील फॉर्म भरून WhatsApp वर विनंती पाठवा किंवा 96899 48286 / 70202 80517 वर कॉल करा. क्लिनिककडून उत्तर आल्यावर अपॉइंटमेंट निश्चित होते.',
-          en: 'Send a request on WhatsApp using the form on this site, or call 96899 48286 / 70202 80517. Your appointment is confirmed once the clinic replies.',
+          mr: 'वेबसाइटवरील फॉर्म भरून WhatsApp वर विनंती पाठवा किंवा 96899 48286 / 70202 80517 वर कॉल करा. आम्ही लवकरच WhatsApp वर तुमची वेळ पक्की करू.',
+          en: 'Send a request on WhatsApp using the form on this site, or call 96899 48286 / 70202 80517. We’ll quickly reply on WhatsApp to fix your time.',
         },
       },
       {
@@ -304,20 +304,51 @@ export const content = {
         a: { mr: 'हो. लहान मुलांच्या डोळ्यांची तपासणी तसेच तिरळेपणाची तपासणी केली जाते.', en: 'Yes. We offer children’s eye examinations, including squint assessment.' },
       },
       {
-        q: { mr: 'मोतीबिंदू किंवा लॅसिक शस्त्रक्रिया येथे होते का?', en: 'Is cataract or LASIK surgery done here?' },
+        q: { mr: 'मोतीबिंदू शस्त्रक्रिया सुविधा आहे का?', en: 'Is cataract surgery available?' },
         a: {
-          mr: 'आम्ही तपासणी करतो आणि शस्त्रक्रियेबाबत योग्य मार्गदर्शन देतो. अधिक माहितीसाठी कृपया क्लिनिकशी संपर्क साधा.',
-          en: 'We examine and give you guidance about surgery. Please contact the clinic for details.',
+          mr: 'हो. मोतीबिंदू तपासणी व MICS फॅको (सूक्ष्म छेद) शस्त्रक्रिया सुविधा उपलब्ध आहे. आर्थिक दृष्ट्या दुर्बल नेत्र रुग्णांना मोफत मोतीबिंदू शस्त्रक्रिया सुविधा उपलब्ध — अधिक माहितीसाठी कॉल करा.',
+          en: 'Yes. Cataract check-up and MICS Phaco (micro-incision) surgery facility is available. Free cataract surgery is available for economically weaker eye patients. Call us for details.',
+        },
+      },
+      {
+        q: { mr: 'लॅसिक ऑपरेशन येथे होते का?', en: 'Is LASIK done here?' },
+        a: {
+          mr: 'लॅसिकबाबत आम्ही तपासणी करून योग्य मार्गदर्शन देतो.',
+          en: 'We examine you and give guidance about LASIK.',
         },
       },
       {
         q: { mr: 'नंबरचे चष्मे आणि गॉगल्स मिळतात का?', en: 'Do you sell prescription glasses and goggles?' },
-        a: { mr: 'हो. सर्व प्रकारचे नंबरचे चष्मे व गॉगल्स उपलब्ध आहेत, होलसेलमध्येही.', en: 'Yes. All types of prescription spectacles and goggles are available, also wholesale.' },
+        a: { mr: 'हो. सर्व प्रकारचे नंबरचे चष्मे व गॉगल्स स्वस्त दरात उपलब्ध आहेत, होलसेलमध्येही.', en: 'Yes. All types of prescription spectacles and goggles at affordable rates, also wholesale.' },
       },
       {
         q: { mr: 'क्लिनिकची वेळ काय आहे?', en: 'What are the clinic timings?' },
         a: { mr: 'भेटीपूर्वी कृपया फोन करून वेळ निश्चित करा.', en: 'Please call before visiting to confirm timings.' },
       },
     ],
+  },
+
+  // Client-provided offer (WhatsApp, 11 Oct 2026). Wording kept as the client wrote it.
+  cataractCare: {
+    badge: { mr: 'मोफत मोतीबिंदू शस्त्रक्रिया', en: 'Free cataract surgery' },
+    heroLine: {
+      mr: 'आर्थिक दृष्ट्या दुर्बल नेत्र रुग्णांना मोफत मोतीबिंदू शस्त्रक्रिया सुविधा उपलब्ध',
+      en: 'Free cataract surgery facility for economically weaker eye patients',
+    },
+    eyebrow: { mr: 'मोतीबिंदू उपचार', en: 'Cataract Care' },
+    title: { mr: 'मोतीबिंदू तपासणी व शस्त्रक्रिया', en: 'Cataract Examination & Surgery' },
+    body: {
+      mr: 'धूसर दिसणे, प्रकाश विखुरल्यासारखा वाटणे किंवा वारंवार चष्म्याचा नंबर बदलणे — ही मोतीबिंदूची लक्षणे असू शकतात. येथे मोतीबिंदूची तपासणी आणि MICS फॅको (मायक्रो इन्सिजन कॅटरॅक्ट सर्जरी) सुविधा उपलब्ध आहे.',
+      en: 'Blurred vision, glare around lights or frequently changing glasses can be signs of cataract. We offer cataract check-ups and the MICS Phaco (Micro Incision Cataract Surgery) facility.',
+    },
+    offerTitle: { mr: 'मोफत मोतीबिंदू शस्त्रक्रिया', en: 'Free cataract surgery' },
+    offer: {
+      mr: 'आर्थिक दृष्ट्या दुर्बल नेत्र रुग्णांना मोफत मोतीबिंदू शस्त्रक्रिया सुविधा उपलब्ध.',
+      en: 'Free cataract surgery facility available for economically weaker eye patients.',
+    },
+    offerNote: { mr: 'पात्रता व अधिक माहितीसाठी कृपया कॉल करा.', en: 'Please call us for eligibility and details.' },
+    imageAlt: { mr: 'MICS फॅको — मायक्रो इन्सिजन कॅटरॅक्ट सर्जरी फलक', en: 'MICS Phaco – Micro Incision Cataract Surgery sign' },
+    cta: { mr: 'मोतीबिंदू तपासणी बुक करा', en: 'Book a cataract check-up' },
+    call: { mr: 'माहितीसाठी कॉल करा', en: 'Call for details' },
   },
 }

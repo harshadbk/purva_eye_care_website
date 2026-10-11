@@ -40,7 +40,6 @@ export default function AppointmentForm({ preselectedReason }) {
   const formRef = useRef(null)
   const [values, setValues] = useState(EMPTY)
   const [errors, setErrors] = useState({})
-  const [submitting, setSubmitting] = useState(false)
   const [result, setResult] = useState(null)
 
   // A service card's "Enquire" button pre-fills the reason.
@@ -60,7 +59,7 @@ export default function AppointmentForm({ preselectedReason }) {
     if (errors[field]) setErrors((err) => ({ ...err, [field]: undefined }))
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     const found = validateAppointment(values)
     setErrors(found)
@@ -70,15 +69,13 @@ export default function AppointmentForm({ preselectedReason }) {
       return
     }
 
-    setSubmitting(true)
     const labels = {
       time: t(a.timeSlots.find((s) => s.id === values.time)),
       reason: reasonOptions.find((r) => r.id === values.reason)?.label ?? '',
     }
-    const res = await submitAppointment(values, labels, lang)
-    setSubmitting(false)
+    const res = submitAppointment(values, labels, lang)
+    window.open(res.url, '_blank', 'noopener,noreferrer')
     setResult(res)
-    if (res.url) window.open(res.url, '_blank', 'noopener,noreferrer')
   }
 
   const reset = () => {
@@ -186,7 +183,7 @@ export default function AppointmentForm({ preselectedReason }) {
               </div>
 
               <div className="sm:col-span-2">
-                <button type="submit" disabled={submitting} className="btn btn-whatsapp w-full text-lg">
+                <button type="submit" className="btn btn-whatsapp w-full text-lg">
                   <CalendarCheck className="size-5" aria-hidden="true" />
                   {t(a.submit)}
                 </button>

@@ -1,8 +1,7 @@
 import { Aperture, Baby, Eye, Focus, Gauge, Glasses, ScanEye, Target } from 'lucide-react'
 
-// Services exactly as listed on the clinic signboard.
-// Surgical items are worded as examination / guidance: the signage does not
-// state that surgery is performed on-site. Confirm with the client before changing.
+// Services as listed on the clinic signboard, updated with the client's own wording
+// (WhatsApp, 11 Oct 2026): cataract surgery facility (MICS Phaco) and affordable eyewear.
 export const services = [
   {
     id: 'eye-exam',
@@ -16,10 +15,10 @@ export const services = [
   {
     id: 'cataract',
     icon: Aperture,
-    title: { mr: 'मोतीबिंदू तपासणी व शस्त्रक्रिया मार्गदर्शन', en: 'Cataract Examination & Surgical Guidance' },
+    title: { mr: 'मोतीबिंदू तपासणी व शस्त्रक्रिया', en: 'Cataract Examination & Surgery' },
     desc: {
-      mr: 'मोतीबिंदूची तपासणी आणि शस्त्रक्रियेबाबत योग्य मार्गदर्शन व संदर्भ.',
-      en: 'Cataract assessment with guidance and referral for surgery when needed.',
+      mr: 'मोतीबिंदूची तपासणी आणि MICS फॅको (सूक्ष्म छेद) मोतीबिंदू शस्त्रक्रिया सुविधा.',
+      en: 'Cataract check-up and MICS Phaco (micro-incision) cataract surgery facility.',
     },
   },
   {
@@ -71,10 +70,10 @@ export const services = [
   {
     id: 'spectacles',
     icon: Glasses,
-    title: { mr: 'सर्व प्रकारचे नंबरचे चष्मे व गॉगल्स होलसेल', en: 'Prescription Spectacles & Goggles (Wholesale)' },
+    title: { mr: 'सर्व प्रकारचे नंबरचे चष्मे व गॉगल्स स्वस्त दरात', en: 'All Prescription Spectacles & Goggles at Affordable Rates' },
     desc: {
-      mr: 'नंबरचे चष्मे, फ्रेम्स, लेन्स आणि गॉगल्स — होलसेलमध्येही उपलब्ध.',
-      en: 'Prescription glasses, frames, lenses and goggles, also available wholesale.',
+      mr: 'नंबरचे चष्मे, फ्रेम्स, लेन्स आणि गॉगल्स — स्वस्त दरात, होलसेलमध्येही उपलब्ध.',
+      en: 'Prescription glasses, frames, lenses and goggles at affordable rates, also wholesale.',
     },
   },
 ]

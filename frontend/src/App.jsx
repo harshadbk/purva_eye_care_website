@@ -3,6 +3,7 @@ import { MotionConfig } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
+import CataractCare from './components/CataractCare'
 import Services from './components/Services'
 import OpticalStore from './components/OpticalStore'
 import WhyChooseUs from './components/WhyChooseUs'
@@ -12,6 +13,7 @@ import ShareClinic from './components/ShareClinic'
 import AppointmentForm from './components/AppointmentForm'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import AdminButton from './components/AdminButton'
 import MobileActionBar from './components/MobileActionBar'
 import { LanguageProvider } from './i18n/LanguageContext'
 
@@ -26,7 +28,9 @@ export default function App() {
         <Navbar />
         <main id="main">
           <Hero />
+          <CataractCare onSelect={selectReason} />
           <About />
+          <ShareClinic />
           <Services onSelect={selectReason} />
           <OpticalStore />
           <WhyChooseUs />
@@ -34,8 +38,8 @@ export default function App() {
           <AppointmentForm preselectedReason={preselected} />
           <FAQ />
           <Contact />
-          <ShareClinic />
         </main>
+        <AdminButton />
         <Footer />
         <MobileActionBar />
       </MotionConfig>

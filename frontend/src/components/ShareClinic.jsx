@@ -12,7 +12,7 @@ export default function ShareClinic() {
   const message = shareMessage(t(s.message), { map: t(s.mapLabel), site: t(s.siteLabel) })
 
   return (
-    <section aria-labelledby="share-title" className="bg-white py-12 sm:py-16">
+    <section aria-labelledby="share-title" className="bg-white pb-16 sm:pb-20 lg:pb-24">
       <div className="container-page">
         <Reveal className="flex flex-col items-start gap-6 rounded-3xl bg-gradient-to-br from-navy-700 to-navy-900 p-6 text-white shadow-lift sm:p-10 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-xl">
