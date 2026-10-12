@@ -7,7 +7,12 @@ import express from 'express'
 import { MongoClient, ObjectId } from 'mongodb'
 
 const envFile = fileURLToPath(new URL('.env', import.meta.url))
-if (existsSync(envFile)) process.loadEnvFile(envFile)
+
+import dotenv from "dotenv";
+
+if (existsSync(envFile)) {
+    dotenv.config({ path: envFile });
+}
 
 const { MONGODB_URI, MONGODB_DB = 'purva_eye_care', ADMIN_USERNAME, ADMIN_PASSWORD, SESSION_SECRET, PORT = 5000 } = process.env
 
