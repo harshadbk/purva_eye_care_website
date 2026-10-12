@@ -11,7 +11,7 @@ export default function Logo({ inverted = false, showTagline = false }) {
         <img src="/images/clinic-mark.png" alt="" width="240" height="110" className="h-auto w-full" />
       </span>
       <span className="leading-tight whitespace-nowrap">
-        <span className={`block text-base font-bold min-[400px]:text-lg sm:text-xl ${inverted ? 'text-white' : 'text-brand-red'}`}>{clinic.name[lang]}</span>
+        <span className={`block text-base font-bold min-[400px]:text-lg sm:text-xl ${inverted ? 'text-white' : 'text-accent'}`}>{clinic.name[lang]}</span>
         <span lang={other} className={`block text-xs font-semibold min-[400px]:text-[0.8rem] sm:text-sm ${inverted ? 'text-navy-100' : 'text-navy-700'}`}>
           {clinic.name[other]}
         </span>

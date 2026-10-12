@@ -39,7 +39,7 @@ export default function Services({ onSelect }) {
                 <a
                   href="#appointment"
                   onClick={() => onSelect(svc.id)}
-                  className="mt-5 inline-flex min-h-11 items-center gap-1.5 self-start text-sm font-semibold text-brand-red hover:underline"
+                  className="mt-5 inline-flex min-h-11 items-center gap-1.5 self-start text-sm font-semibold text-accent hover:underline"
                 >
                   {t(s.cta)}
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />

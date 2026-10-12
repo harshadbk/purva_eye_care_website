@@ -1,5 +1,5 @@
-// Appointment booking logic, kept separate from the UI so a backend API
-// can replace the WhatsApp flow later without touching the form component.
+// Appointment booking logic, kept separate from the UI.
+// WhatsApp and the database copy are fully independent: either can fail without affecting the other.
 import { clinic, whatsappLink } from '../data/clinic'
 import { API_URL } from './api'
 
@@ -67,25 +67,103 @@ export function buildAppointmentMessage(values, labels, lang) {
   return lines.join('\n')
 }
 
-// Records the request in the clinic's database (backend/server.js) so it shows up
-// in the admin panel. Failures are swallowed: WhatsApp alone still reaches the clinic.
-async function saveAppointment(values, labels, lang) {
+// ---------- database copy (independent of WhatsApp) ----------
+// WhatsApp is the primary channel and never waits for, or depends on, the backend.
+// The database copy is best-effort: if the server or database is down, the request is
+// kept in this browser and re-sent later, so the admin list still fills up once it's back.
+const QUEUE_KEY = 'purva-pending-appointments'
+const QUEUE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000
+const SAVE_TIMEOUT_MS = 8000
+
+function readQueue() {
+  try {
+    const list = JSON.parse(localStorage.getItem(QUEUE_KEY) ?? '[]')
+    return Array.isArray(list) ? list.filter((item) => Date.now() - item.queuedAt < QUEUE_MAX_AGE_MS) : []
+  } catch {
+    return []
+  }
+}
+
+function writeQueue(list) {
+  try {
+    if (list.length) localStorage.setItem(QUEUE_KEY, JSON.stringify(list))
+    else localStorage.removeItem(QUEUE_KEY)
+  } catch {
+    // Private mode / storage full: the WhatsApp message already reached the clinic.
+  }
+}
+
+function newClientId() {
+  return globalThis.crypto?.randomUUID?.() ?? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`
+}
+
+// Resolves true/false; never throws, never hangs longer than SAVE_TIMEOUT_MS.
+async function postAppointment(payload) {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), SAVE_TIMEOUT_MS)
   try {
     const res = await fetch(`${API_URL}/api/appointments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...values, phone: normalizePhone(values.phone), reasonLabel: labels.reason, lang }),
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+      // Lets the request finish even if the phone switches to the WhatsApp app.
+      keepalive: true,
     })
-    return res.ok
+    // 400 means the data itself was rejected; retrying won't help, so drop it.
+    return res.ok || res.status === 400
   } catch {
     return false
+  } finally {
+    clearTimeout(timer)
+  }
+}
+
+async function saveAppointment(payload) {
+  const ok = await postAppointment(payload)
+  if (!ok) writeQueue([...readQueue().filter((p) => p.clientId !== payload.clientId), { ...payload, queuedAt: Date.now() }])
+  return ok
+}
+
+// Re-sends requests saved while the backend was unreachable. Safe to call any time;
+// the backend ignores a clientId it has already stored.
+let flushing = false
+export async function flushPendingAppointments() {
+  if (flushing) return
+  const queue = readQueue()
+  if (!queue.length) return
+  flushing = true
+  try {
+    const remaining = []
+    for (const item of queue) {
+      const { queuedAt, ...payload } = item
+      if (!(await postAppointment(payload))) remaining.push(item)
+    }
+    // Keep anything queued while we were flushing.
+    const added = readQueue().filter((q) => !queue.some((o) => o.clientId === q.clientId))
+    writeQueue([...remaining, ...added])
+  } finally {
+    flushing = false
   }
 }
 
 // Synchronous on purpose: the caller must open WhatsApp inside the click handler,
-// or mobile browsers block it. The database save runs in the background.
+// or mobile browsers block it. The database save runs in the background and can't
+// delay or break the WhatsApp step.
 export function submitAppointment(values, labels, lang) {
   const url = whatsappLink(buildAppointmentMessage(values, labels, lang))
-  const saved = saveAppointment(values, labels, lang)
+  let saved
+  try {
+    const payload = { ...values, phone: normalizePhone(values.phone), reasonLabel: labels.reason, lang, clientId: newClientId() }
+    saved = saveAppointment(payload)
+  } catch {
+    saved = Promise.resolve(false)
+  }
   return { channel: 'whatsapp', url, saved }
+}
+
+// Opens WhatsApp; falls back to navigating in the same tab when pop-ups are blocked.
+export function openWhatsApp(url) {
+  const win = window.open(url, '_blank', 'noopener,noreferrer')
+  if (!win) window.location.href = url
 }

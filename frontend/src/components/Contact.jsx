@@ -35,7 +35,7 @@ export default function Contact() {
               <ul className="flex flex-wrap gap-x-5 gap-y-1">
                 {clinic.phones.map((p) => (
                   <li key={p.tel}>
-                    <a href={telLink(p)} className="inline-flex min-h-11 items-center text-lg font-bold text-navy-800 hover:text-brand-red">
+                    <a href={telLink(p)} className="inline-flex min-h-11 items-center text-lg font-bold text-navy-800 hover:text-accent">
                       {p.display}
                     </a>
                   </li>
@@ -103,7 +103,7 @@ export default function Contact() {
               </p>
               <p className="mt-2 text-sm font-medium text-navy-900">
                 {t(f.lost)}{' '}
-                <a href={telLink()} className="font-bold whitespace-nowrap text-brand-red hover:underline">
+                <a href={telLink()} className="font-bold whitespace-nowrap text-accent hover:underline">
                   {clinic.phones[0].display}
                 </a>
               </p>

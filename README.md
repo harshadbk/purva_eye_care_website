@@ -40,15 +40,22 @@ npm run dev          # open http://localhost:5173 (calls to /api are passed to t
 - **Backend:** deploy `backend/` to a Node host (Render, Railway, a VPS). Start command: `npm start`. Put every variable from `backend/.env` in the host's environment settings, and set `CORS_ORIGIN` to the website's real address (for example `https://purvaeyecare.in`). In **MongoDB Atlas → Network Access**, allow the host's IP.
 - **Frontend:** deploy `frontend/` to any static host (Netlify, Vercel, cPanel). Build command `npm run build`, output folder `dist`. Set `VITE_API_URL` to the backend's address (for example `https://purva-eye-care-api.onrender.com`) **before** building.
 
-If the backend is down, booking still works through WhatsApp; only the database copy and the admin list are missed.
+### WhatsApp and the database are independent
+
+- Booking always opens WhatsApp first, straight from the browser, without waiting for the backend.
+- The database copy is sent in the background with an 8-second timeout. If the server or MongoDB is down, the request is kept in the patient's browser and sent again on their next visit or when they come back online. Each request carries an ID, so retries never create duplicates.
+- The backend itself keeps running when MongoDB is unreachable. It retries the connection every 30 seconds; meanwhile admin login works and database routes answer `503`. `GET /api/health` reports `{ ok, db }`, and the admin panel shows a banner while the database is offline.
 
 ## Admin panel
 
 A small **"Admin login"** button (lock icon) sits just above the dark-blue footer, on the right. It opens a login; after signing in the clinic sees:
 
-- counts of **total / pending / confirmed** appointment requests,
+- counts of **total / today / pending / confirmed** appointment requests, with search by name or phone,
 - each request (name, phone, preferred date and time, reason, notes, when it was received),
 - **Confirm on WhatsApp**: opens WhatsApp to the patient with a ready confirmation message in the language they booked in (date, time, address, map link) and marks the request confirmed in the database.
+- **Ratings** tab: patient reviews from the website. New reviews stay hidden until you **Approve & show** them; you can also hide or delete them. Only approved reviews and their average appear on the site. **Add feedback received from a patient** lets the clinic enter genuine feedback given on WhatsApp, by phone, in person or on Google (with the patient's permission); it is shown with its source.
+
+Opening the backend's own address (e.g. http://localhost:5000) shows a status page: database status, appointment/review counts and the list of API endpoints. Patient details are only in the admin panel.
 
 The admin username and password live in `backend/.env` (`ADMIN_USERNAME`, `ADMIN_PASSWORD`) and are checked by the backend; they never appear in the website code. Login lasts 12 hours per browser tab, and repeated wrong passwords are blocked for 15 minutes.
 
@@ -67,7 +74,8 @@ frontend/
     images/          optimized clinic photos, logo, og-image.jpg for social previews
   src/
     components/      Navbar, Hero, About, Services, OpticalStore, WhyChooseUs, EyeCareTips,
-                     AppointmentForm, FAQ, Contact, ShareClinic, Footer, MobileActionBar, AdminButton
+                     AppointmentForm, FAQ, Contact, ShareClinic, Footer, MobileActionBar, AdminButton,
+                     ServiceArea (nearby villages, for local search), Reviews (ratings)
     admin/           admin panel (lazy-loaded) and its API client
     data/
       clinic.js      phone numbers, address, WhatsApp number, map links, hours
@@ -76,7 +84,8 @@ frontend/
     i18n/            language context (Marathi default, choice saved in localStorage)
     lib/
       api.js         backend address (VITE_API_URL)
-      booking.js     appointment validation, WhatsApp message, saves the request to the backend
+      booking.js     appointment validation, WhatsApp message, background save + retry queue
+      reviews.js     load approved reviews, submit a rating
       share.js       WhatsApp share text and "Save contact" card
     App.jsx, main.jsx, index.css (theme colors and fonts)
 backend/
@@ -120,3 +129,12 @@ The form checks the name, a 10-digit Indian mobile number, a date (today or late
 - [ ] **Optical store:** the site says "स्वस्त दरात" (affordable rates) and wholesale, as the client wrote. It lists no brands or prices.
 - [ ] **Domain:** once it is known, add `<link rel="canonical">` and `og:url` to `index.html`, and make `og:image` an absolute URL.
 - [ ] **Photos:** the gallery uses cropped phone photos of the clinic's display. Better-quality photos can be dropped into `public/images/` under the same names.
+
+## Getting found in local search
+
+The site has local-search basics: structured data (`Optician` + `MedicalClinic`, address, map coordinates, nearby areas, services), Marathi and English keywords, the "Near you" section naming nearby villages, FAQ structured data, and `robots.txt`. Once the domain is live:
+
+1. Add `<link rel="canonical">` in `index.html` and a `Sitemap:` line in `public/robots.txt`.
+2. Claim and verify the clinic's **Google Business Profile** (category "Eye care center" / "Optician"), add the website link, photos and opening hours. This matters most for "near me" searches on Google Maps.
+3. Submit the site in **Google Search Console**.
+4. Paste the Business Profile's review link into `googleReviewUrl` in `frontend/src/data/clinic.js` to show "Rate us on Google" buttons.

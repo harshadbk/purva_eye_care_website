@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MotionConfig } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -15,12 +15,22 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import AdminButton from './components/AdminButton'
 import MobileActionBar from './components/MobileActionBar'
+import Reviews from './components/Reviews'
+import ServiceArea from './components/ServiceArea'
 import { LanguageProvider } from './i18n/LanguageContext'
+import { flushPendingAppointments } from './lib/booking'
 
 export default function App() {
   // Wrapped in an object so choosing the same service twice still re-applies it.
   const [preselected, setPreselected] = useState(null)
   const selectReason = (id) => setPreselected({ id })
+
+  // Bookings made while the backend was down are re-sent to the database when possible.
+  useEffect(() => {
+    flushPendingAppointments()
+    window.addEventListener('online', flushPendingAppointments)
+    return () => window.removeEventListener('online', flushPendingAppointments)
+  }, [])
 
   return (
     <LanguageProvider>
@@ -30,11 +40,13 @@ export default function App() {
           <Hero />
           <CataractCare onSelect={selectReason} />
           <About />
+          <ServiceArea />
           <ShareClinic />
           <Services onSelect={selectReason} />
           <OpticalStore />
           <WhyChooseUs />
           <EyeCareTips onSelect={selectReason} />
+          <Reviews />
           <AppointmentForm preselectedReason={preselected} />
           <FAQ />
           <Contact />

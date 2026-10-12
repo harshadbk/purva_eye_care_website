@@ -3,7 +3,8 @@
 @theme {
   --font-sans: 'Noto Sans Devanagari', 'Noto Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  /* Palette drawn from the clinic signboard: navy band, teal/blue logo, red lettering */
+  /* Palette drawn from the clinic signboard: navy band, teal/blue logo.
+     Accent is a calm "safety" blue (replaces the old red) for calls to action and highlights. */
   --color-navy-50: #eef2fb;
   --color-navy-100: #d9e1f5;
   --color-navy-200: #b3c3ea;
@@ -19,8 +20,9 @@
   --color-teal-600: #0e8797;
   --color-teal-700: #0d6c7a;
 
-  --color-brand-red: #c8102e;
-  --color-brand-red-soft: #fdecee;
+  --color-accent: #0a66c2;
+  --color-accent-dark: #084f96;
+  --color-accent-soft: #e8f1fc;
 
   --color-whatsapp: #128c4a;
   --color-whatsapp-dark: #0e6f3a;
@@ -92,8 +94,8 @@
     @apply bg-whatsapp text-white hover:bg-whatsapp-dark;
   }
 
-  .btn-red {
-    @apply bg-brand-red text-white hover:bg-[#a50d26];
+  .btn-accent {
+    @apply bg-accent text-white hover:bg-accent-dark;
   }
 
   .card {
@@ -101,6 +103,6 @@
   }
 
   .field-input {
-    @apply block min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-base text-navy-950 placeholder:text-slate-400 transition-colors focus:border-teal-600 focus:ring-2 focus:ring-teal-500/30 focus:outline-none aria-[invalid=true]:border-brand-red;
+    @apply block min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-base text-navy-950 placeholder:text-slate-400 transition-colors focus:border-teal-600 focus:ring-2 focus:ring-teal-500/30 focus:outline-none aria-[invalid=true]:border-accent;
   }
 }

@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, CalendarCheck, Glasses, HeartHandshake, MapPin, Phone, ScanEye, UserRound } from 'lucide-react'
+import { ArrowRight, CalendarCheck, Glasses, HeartHandshake, MapPin, Phone, ScanEye, Star, UserRound } from 'lucide-react'
 import { content } from '../data/content'
 import { clinic, telLink } from '../data/clinic'
+import { fetchReviews } from '../lib/reviews'
 import { useLanguage } from '../i18n/LanguageContext'
 
 const trustIcons = [ScanEye, Glasses, UserRound]
@@ -9,18 +11,33 @@ const trustIcons = [ScanEye, Glasses, UserRound]
 export default function Hero() {
   const { lang, t } = useLanguage()
   const h = content.hero
+  const [rating, setRating] = useState(null)
+
+  useEffect(() => {
+    let active = true
+    fetchReviews().then((data) => active && data?.count > 0 && setRating(data))
+    return () => {
+      active = false
+    }
+  }, [])
 
   return (
     <section id="home" aria-labelledby="hero-title" className="relative overflow-hidden bg-gradient-to-b from-navy-50/70 to-white">
       <div className="container-page grid items-center gap-10 pt-10 pb-16 sm:pt-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:pt-20 lg:pb-24">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: 'easeOut' }}>
           <p className="mb-4 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-sm font-medium text-navy-700 shadow-card">
-            <span className="size-2 rounded-full bg-brand-red" aria-hidden="true" />
+            <span className="size-2 rounded-full bg-accent" aria-hidden="true" />
             {t(clinic.tagline)} · {t(h.eyebrow)}
           </p>
+          {rating && (
+            <a href="#reviews" className="mb-4 ml-2 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-sm font-semibold text-navy-800 shadow-card hover:bg-navy-50">
+              <Star className="size-4 fill-amber-400 text-amber-400" aria-hidden="true" />
+              {rating.average.toFixed(1)} · {rating.count} {t(content.reviews.count)}
+            </a>
+          )}
 
           <h1 id="hero-title" lang="mr" className="text-[1.95rem] font-bold sm:text-4xl lg:text-[2.75rem]">
-            तुमच्या डोळ्यांची काळजी, <span className="text-brand-red">आमची जबाबदारी</span>
+            तुमच्या डोळ्यांची काळजी, <span className="text-accent">आमची जबाबदारी</span>
           </h1>
           {lang === 'en' && <p className="sr-only">{h.title.en}</p>}
 
@@ -31,7 +48,7 @@ export default function Hero() {
           <p className="mt-5 max-w-xl text-base text-slate-600 sm:text-lg">{t(h.body)}</p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="#appointment" className="btn btn-red px-6">
+            <a href="#appointment" className="btn btn-accent px-6">
               <CalendarCheck className="size-5" aria-hidden="true" />
               {t(h.primary)}
             </a>
@@ -43,20 +60,20 @@ export default function Hero() {
 
           <a
             href="#cataract"
-            className="group mt-6 flex items-center gap-3 rounded-2xl border border-brand-red/25 bg-brand-red-soft px-4 py-3 transition-colors hover:border-brand-red/50"
+            className="group mt-6 flex items-center gap-3 rounded-2xl border border-accent/25 bg-accent-soft px-4 py-3 transition-colors hover:border-accent/50"
           >
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-red text-white">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent text-white">
               <HeartHandshake className="size-5" aria-hidden="true" />
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block text-xs font-bold tracking-wide text-brand-red uppercase">{t(content.cataractCare.badge)}</span>
+              <span className="block text-xs font-bold tracking-wide text-accent uppercase">{t(content.cataractCare.badge)}</span>
               <span className="block text-sm font-semibold text-navy-900 sm:text-base">{t(content.cataractCare.heroLine)}</span>
             </span>
-            <ArrowRight className="size-5 shrink-0 text-brand-red transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+            <ArrowRight className="size-5 shrink-0 text-accent transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
           </a>
 
           <p className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-600">
-            <MapPin className="size-4 shrink-0 text-brand-red" aria-hidden="true" />
+            <MapPin className="size-4 shrink-0 text-accent" aria-hidden="true" />
             <span className="font-medium text-navy-900">{t(content.findUs.heroLine)}</span>
             <a href={clinic.directionsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-8 items-center font-semibold text-teal-700 underline-offset-2 hover:underline">
               {t(content.findUs.heroLink)} →

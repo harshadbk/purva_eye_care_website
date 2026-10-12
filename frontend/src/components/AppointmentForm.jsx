@@ -5,7 +5,7 @@ import SectionHeading from './SectionHeading'
 import { content } from '../data/content'
 import { services } from '../data/services'
 import { clinic, telLink } from '../data/clinic'
-import { submitAppointment, todayISO, validateAppointment } from '../lib/booking'
+import { openWhatsApp, submitAppointment, todayISO, validateAppointment } from '../lib/booking'
 import { useLanguage } from '../i18n/LanguageContext'
 
 const EMPTY = { name: '', phone: '', date: '', time: '', reason: '', notes: '' }
@@ -17,7 +17,7 @@ function Field({ id, label, required, error, requiredText, children }) {
       <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-navy-900">
         {label}
         {required && (
-          <span className="text-brand-red" aria-hidden="true">
+          <span className="text-accent" aria-hidden="true">
             {' '}*
           </span>
         )}
@@ -25,7 +25,7 @@ function Field({ id, label, required, error, requiredText, children }) {
       </label>
       {children}
       {error && (
-        <p id={`${id}-error`} className="mt-1.5 text-sm font-medium text-brand-red">
+        <p id={`${id}-error`} className="mt-1.5 text-sm font-medium text-accent">
           {error}
         </p>
       )}
@@ -74,7 +74,7 @@ export default function AppointmentForm({ preselectedReason }) {
       reason: reasonOptions.find((r) => r.id === values.reason)?.label ?? '',
     }
     const res = submitAppointment(values, labels, lang)
-    window.open(res.url, '_blank', 'noopener,noreferrer')
+    openWhatsApp(res.url)
     setResult(res)
   }
 
@@ -101,8 +101,8 @@ export default function AppointmentForm({ preselectedReason }) {
       <div className="container-page grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
         <div>
           <SectionHeading id="appointment-title" eyebrow={t(a.eyebrow)} title={t(a.title)} intro={t(a.intro)} align="left" />
-          <Reveal className="flex gap-3 rounded-2xl border border-brand-red/20 bg-brand-red-soft p-4 text-sm text-navy-900">
-            <Info className="mt-0.5 size-5 shrink-0 text-brand-red" aria-hidden="true" />
+          <Reveal className="flex gap-3 rounded-2xl border border-accent/20 bg-accent-soft p-4 text-sm text-navy-900">
+            <Info className="mt-0.5 size-5 shrink-0 text-accent" aria-hidden="true" />
             <p className="font-medium">{t(a.notice)}</p>
           </Reveal>
           <Reveal className="mt-6 text-sm text-slate-600">

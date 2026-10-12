@@ -93,7 +93,7 @@ export default function Navbar() {
             <Phone className="size-4" aria-hidden="true" />
             <span className="xl:hidden 2xl:inline">{t(content.nav.call)}</span>
           </a>
-          <a href="#appointment" className="btn btn-red min-h-10 px-4 text-sm whitespace-nowrap">
+          <a href="#appointment" className="btn btn-accent min-h-10 px-4 text-sm whitespace-nowrap">
             <CalendarCheck className="size-4" aria-hidden="true" />
             {t(content.nav.book)}
           </a>
@@ -139,7 +139,7 @@ export default function Navbar() {
               </ul>
               <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4">
                 <LanguageToggle className="self-start" />
-                <a href="#appointment" onClick={close} className="btn btn-red w-full">
+                <a href="#appointment" onClick={close} className="btn btn-accent w-full">
                   <CalendarCheck className="size-5" aria-hidden="true" />
                   {t(content.nav.book)}
                 </a>

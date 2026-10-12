@@ -6,6 +6,7 @@ export const content = {
       { id: 'about', mr: 'आमच्याबद्दल', en: 'About Us' },
       { id: 'services', mr: 'सेवा', en: 'Services' },
       { id: 'optical', mr: 'ऑप्टिकल स्टोअर', en: 'Optical Store' },
+      { id: 'reviews', mr: 'रेटिंग', en: 'Ratings' },
       { id: 'contact', mr: 'संपर्क', en: 'Contact' },
     ],
     call: { mr: 'कॉल करा', en: 'Call Now' },
@@ -350,5 +351,90 @@ export const content = {
     imageAlt: { mr: 'MICS फॅको — मायक्रो इन्सिजन कॅटरॅक्ट सर्जरी फलक', en: 'MICS Phaco – Micro Incision Cataract Surgery sign' },
     cta: { mr: 'मोतीबिंदू तपासणी बुक करा', en: 'Book a cataract check-up' },
     call: { mr: 'माहितीसाठी कॉल करा', en: 'Call for details' },
+  },
+
+  // Patient ratings. New reviews appear only after the clinic approves them in the admin panel.
+  reviews: {
+    eyebrow: { mr: 'रुग्णांचे अभिप्राय', en: 'Patient Ratings' },
+    title: { mr: 'आमच्या रुग्णांचा अनुभव', en: 'What our patients say' },
+    intro: {
+      mr: 'तुमचा अनुभव इतरांना योग्य निवड करण्यास मदत करतो. कृपया आम्हाला रेटिंग द्या.',
+      en: 'Your experience helps others choose the right care. Please rate us.',
+    },
+    average: { mr: 'सरासरी रेटिंग', en: 'Average rating' },
+    count: { mr: 'अभिप्राय', en: 'reviews' },
+    empty: { mr: 'पहिला अभिप्राय तुमचा असू द्या!', en: 'Be the first to leave a review!' },
+    formTitle: { mr: 'तुमचे रेटिंग द्या', en: 'Rate your visit' },
+    ratingLabel: { mr: 'रेटिंग', en: 'Rating' },
+    stars: { mr: 'स्टार', en: 'stars' },
+    name: { mr: 'तुमचे नाव', en: 'Your name' },
+    comment: { mr: 'तुमचा अनुभव (ऐच्छिक)', en: 'Your experience (optional)' },
+    commentPlaceholder: { mr: 'उदा. तपासणी व्यवस्थित झाली, चष्मा लवकर मिळाला…', en: 'e.g. thorough check-up, glasses ready quickly…' },
+    submit: { mr: 'रेटिंग पाठवा', en: 'Submit rating' },
+    sending: { mr: 'पाठवत आहे…', en: 'Sending…' },
+    errors: {
+      rating: { mr: 'कृपया स्टार निवडा.', en: 'Please choose a star rating.' },
+      name: { mr: 'कृपया तुमचे नाव लिहा.', en: 'Please enter your name.' },
+    },
+    thanksTitle: { mr: 'धन्यवाद!', en: 'Thank you!' },
+    thanksBody: {
+      mr: 'तुमचा अभिप्राय मिळाला. तपासणीनंतर तो वेबसाइटवर दिसेल.',
+      en: 'We received your review. It will appear on the site after a quick check.',
+    },
+    offlineBody: {
+      mr: 'सध्या सर्व्हरशी संपर्क होत नाही. तुमचा अभिप्राय WhatsApp वर पाठवा.',
+      en: 'We can’t reach our server right now. Please send your review on WhatsApp instead.',
+    },
+    tooMany: { mr: 'खूप अभिप्राय पाठवले गेले. कृपया नंतर प्रयत्न करा.', en: 'Too many reviews sent. Please try again later.' },
+    sendWhatsapp: { mr: 'WhatsApp वर पाठवा', en: 'Send on WhatsApp' },
+    google: { mr: 'Google वरही रेटिंग द्या', en: 'Also rate us on Google' },
+    whatsappIntro: { mr: 'पुर्वा आय केअर सेंटरसाठी माझा अभिप्राय', en: 'My review for Purva Eye Care Center' },
+    place: { mr: 'गाव / शहर (ऐच्छिक)', en: 'Village / town (optional)' },
+    placePlaceholder: { mr: 'उदा. दिंडोरी', en: 'e.g. Dindori' },
+    breakdown: { mr: 'स्टारनुसार अभिप्राय', en: 'Reviews by star rating' },
+    filterLabel: { mr: 'स्टारनुसार पहा', en: 'Filter by stars' },
+    filterAll: { mr: 'सर्व', en: 'All' },
+    showMore: { mr: 'आणखी पहा', en: 'Show more' },
+    sources: {
+      whatsapp: { mr: 'WhatsApp द्वारे', en: 'via WhatsApp' },
+      'in-person': { mr: 'क्लिनिकमध्ये दिलेला', en: 'given at the clinic' },
+      phone: { mr: 'फोनवर दिलेला', en: 'given by phone' },
+      google: { mr: 'Google वरून', en: 'from Google' },
+    },
+  },
+
+  // Nearby places patients come from: helps local "eye clinic near me" searches.
+  serviceArea: {
+    eyebrow: { mr: 'तुमच्या जवळ', en: 'Near You' },
+    title: { mr: 'दिंडोरी परिसरातील जवळचा डोळ्यांचा दवाखाना', en: 'Your nearest eye clinic around Dindori' },
+    body: {
+      mr: 'डोळ्यांची तपासणी, चष्म्याचा नंबर, मोतीबिंदू, काचबिंदू, तिरळेपणा किंवा लहान मुलांच्या डोळ्यांची तपासणी — दिंडोरी व आसपासच्या गावांतील रुग्णांसाठी पालखेड रोडवर, नाशिकला न जाता.',
+      en: 'Eye tests, spectacle power, cataract, glaucoma, squint or children’s eye checks: right here on Palkhed Road for patients from Dindori and nearby villages, without travelling to Nashik city.',
+    },
+    areasLabel: { mr: 'येथून रुग्ण येतात', en: 'Patients visit us from' },
+    areas: [
+      { mr: 'दिंडोरी', en: 'Dindori' },
+      { mr: 'पालखेड', en: 'Palkhed' },
+      { mr: 'जानोरी', en: 'Janori' },
+      { mr: 'मोहाडी', en: 'Mohadi' },
+      { mr: 'वणी', en: 'Vani' },
+      { mr: 'खेडगाव', en: 'Khedgaon' },
+      { mr: 'ओझर', en: 'Ozar' },
+      { mr: 'पिंपळगाव बसवंत', en: 'Pimpalgaon Baswant' },
+      { mr: 'कळवण', en: 'Kalwan' },
+      { mr: 'पेठ', en: 'Peth' },
+      { mr: 'नाशिक', en: 'Nashik' },
+    ],
+    searches: {
+      mr: 'शोधता आहात? “डोळ्यांचा दवाखाना दिंडोरी”, “नेत्र तपासणी जवळ”, “चष्म्याचे दुकान दिंडोरी”, “eye clinic near me” — तर तुम्ही योग्य ठिकाणी आहात.',
+      en: 'Searching for “eye clinic near me”, “eye doctor in Dindori”, “eye test near me” or “optical shop Dindori”? You’re in the right place.',
+    },
+    // VERIFY with the client before publishing: these three points are general good practice.
+    safetyTitle: { mr: 'सुरक्षित व स्वच्छ तपासणी', en: 'Safe, hygienic examinations' },
+    safety: [
+      { mr: 'प्रत्येक रुग्णानंतर उपकरणांची स्वच्छता', en: 'Equipment cleaned after every patient' },
+      { mr: 'वेदनारहित, सौम्य प्राथमिक तपासणी', en: 'Painless, gentle first examination' },
+      { mr: 'स्पष्ट माहिती — गरज असेल तरच पुढील उपचार', en: 'Clear advice: further treatment only when needed' },
+    ],
   },
 }

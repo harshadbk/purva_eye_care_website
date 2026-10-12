@@ -1,26 +1,22 @@
-// Admin API client. The token lives in sessionStorage, so closing the tab logs out.
+// Admin API client. The token is kept only in memory (never in localStorage/sessionStorage),
+// so closing the panel, refreshing or closing the tab always asks for the login again.
 import { clinic } from '../data/clinic'
 import { content } from '../data/content'
 import { formatDate } from '../lib/booking'
 import { API_URL } from '../lib/api'
 
-const TOKEN_KEY = 'purva-admin-token'
+let token = null
 
-export function getToken() {
-  try {
-    return sessionStorage.getItem(TOKEN_KEY)
-  } catch {
-    return null
-  }
+export const getToken = () => token
+export const setToken = (next) => {
+  token = next || null
 }
 
-export function setToken(token) {
-  try {
-    if (token) sessionStorage.setItem(TOKEN_KEY, token)
-    else sessionStorage.removeItem(TOKEN_KEY)
-  } catch {
-    // Without storage the admin just logs in again next time.
-  }
+// Clean up anything an older version of the site left in storage.
+try {
+  sessionStorage.removeItem('purva-admin-token')
+} catch {
+  // storage unavailable: nothing to clean
 }
 
 export class AuthError extends Error {}
@@ -39,6 +35,34 @@ async function request(path, options = {}) {
 export const login = (username, password) => request('/admin/login', { method: 'POST', body: JSON.stringify({ username, password }) })
 export const fetchAppointments = () => request('/admin/appointments')
 export const markConfirmed = (id) => request(`/admin/appointments/${id}/confirm`, { method: 'PATCH' })
+export const setAppointmentStatus = (id, status) =>
+  request(`/admin/appointments/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) })
+
+// Ends the session on the server too, so the token can't be reused. Never throws.
+export async function logout() {
+  const current = token
+  token = null
+  if (!current) return
+  try {
+    await fetch(`${API_URL}/api/admin/logout`, { method: 'POST', headers: { Authorization: `Bearer ${current}` }, keepalive: true })
+  } catch {
+    // Server unreachable: the session still expires on its own.
+  }
+}
+export const fetchAdminReviews = () => request('/admin/reviews')
+export const addReview = (review) => request('/admin/reviews', { method: 'POST', body: JSON.stringify(review) })
+export const setReviewStatus = (id, status) => request(`/admin/reviews/${id}`, { method: 'PATCH', body: JSON.stringify({ status }) })
+export const deleteReview = (id) => request(`/admin/reviews/${id}`, { method: 'DELETE' })
+
+// { ok, db } from the backend, or null when the server itself is unreachable.
+export async function fetchHealth() {
+  try {
+    const res = await fetch(`${API_URL}/api/health`)
+    return res.ok ? await res.json() : null
+  } catch {
+    return null
+  }
+}
 
 export const slotLabel = (id, lang) => content.appointment.timeSlots.find((s) => s.id === id)?.[lang] ?? id
 
