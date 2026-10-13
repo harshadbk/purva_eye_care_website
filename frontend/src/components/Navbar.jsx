@@ -37,6 +37,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const toggleRef = useRef(null)
+  const pendingTarget = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -62,7 +63,22 @@ export default function Navbar() {
     }
   }, [open])
 
-  const close = () => setOpen(false)
+  // On phones the menu sits inside the sticky header, so collapsing it shifts the page while the
+  // browser is smooth-scrolling and the jump gets cancelled. Close first, scroll once it's gone.
+  const goTo = (e, id) => {
+    e.preventDefault()
+    pendingTarget.current = id
+    setOpen(false)
+  }
+  const scrollToPending = () => {
+    const id = pendingTarget.current
+    pendingTarget.current = null
+    const target = id && document.getElementById(id)
+    if (!target) return
+    history.pushState(null, '', `#${id}`)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+  }
 
   return (
     <header
@@ -117,7 +133,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={scrollToPending}>
         {open && (
           <motion.div
             id="mobile-menu"
@@ -131,7 +147,7 @@ export default function Navbar() {
               <ul className="grid gap-1">
                 {content.nav.links.map((l) => (
                   <li key={l.id}>
-                    <a href={`#${l.id}`} onClick={close} className="block rounded-xl px-4 py-3 text-lg font-medium text-navy-900 hover:bg-navy-50">
+                    <a href={`#${l.id}`} onClick={(e) => goTo(e, l.id)} className="block rounded-xl px-4 py-3 text-lg font-medium text-navy-900 hover:bg-navy-50">
                       {t(l)}
                     </a>
                   </li>
@@ -139,7 +155,7 @@ export default function Navbar() {
               </ul>
               <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4">
                 <LanguageToggle className="self-start" />
-                <a href="#appointment" onClick={close} className="btn btn-accent w-full">
+                <a href="#appointment" onClick={(e) => goTo(e, 'appointment')} className="btn btn-accent w-full">
                   <CalendarCheck className="size-5" aria-hidden="true" />
                   {t(content.nav.book)}
                 </a>

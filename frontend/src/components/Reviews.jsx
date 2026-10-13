@@ -9,16 +9,18 @@ import { useLanguage } from '../i18n/LanguageContext'
 
 const EMPTY = { rating: 0, name: '', place: '', comment: '' }
 
+// Returns [data, reload]. Call reload() after submitting a review to show it.
 export function useReviews(limit) {
   const [data, setData] = useState(undefined) // undefined = loading, null = backend unreachable
+  const [version, setVersion] = useState(0)
   useEffect(() => {
     let active = true
     fetchReviews(limit).then((d) => active && setData(d))
     return () => {
       active = false
     }
-  }, [limit])
-  return data
+  }, [limit, version])
+  return [data, () => setVersion((v) => v + 1)]
 }
 
 function StarPicker({ value, onChange, label, starsWord, describedBy }) {
@@ -129,7 +131,7 @@ export function EmptyReviews() {
   )
 }
 
-export function ReviewForm() {
+export function ReviewForm({ onSubmitted }) {
   const { lang, t } = useLanguage()
   const r = content.reviews
   const uid = useId()
@@ -161,9 +163,9 @@ export function ReviewForm() {
     setErrors(found)
     if (Object.keys(found).length) return
     setStatus('sending')
-    setStatus(
-      await submitReview({ rating: values.rating, name: values.name.trim(), place: values.place.trim(), comment: values.comment.trim(), lang }),
-    )
+    const result = await submitReview({ rating: values.rating, name: values.name.trim(), place: values.place.trim(), comment: values.comment.trim(), lang })
+    setStatus(result)
+    if (result === 'ok') onSubmitted?.()
   }
 
   if (status === 'ok') {
@@ -281,12 +283,12 @@ export function ReviewForm() {
 const PAGE_SIZE = 6
 const STAR_FILTERS = [0, 5, 4, 3, 2, 1]
 
-// Ratings section on the main page: summary with star breakdown, a star filter, all approved
+// Ratings section on the main page: summary with star breakdown, a star filter, all shown
 // reviews (more load in place with "Show more"), and the form to add one.
 export default function Reviews() {
   const { t } = useLanguage()
   const r = content.reviews
-  const data = useReviews(200)
+  const [data, reload] = useReviews(200)
   const [filter, setFilter] = useState(0)
   const [shown, setShown] = useState(PAGE_SIZE)
 
@@ -341,7 +343,7 @@ export default function Reviews() {
           </Reveal>
 
           <Reveal delay={0.05} className="card p-5 sm:p-6 lg:sticky lg:top-28">
-            <ReviewForm />
+            <ReviewForm onSubmitted={reload} />
           </Reveal>
         </div>
       </div>

@@ -532,7 +532,7 @@ function ReviewsTab({ onLogout, onDbError }) {
         </div>
       )}
 
-      <p className="mt-4 text-sm text-slate-600">Reviews written on the website stay hidden until you approve them.</p>
+      <p className="mt-4 text-sm text-slate-600">Reviews written on the website are shown right away. Hide or delete any that are not genuine.</p>
 
       <div className="mt-4">
         <AddReviewForm onAdded={(review) => setList((l) => [review, ...(l ?? [])])} onLogout={onLogout} />

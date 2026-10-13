@@ -39,10 +39,14 @@ export function fetchReviews(limit = 30) {
   return cache.get(limit)
 }
 
-// Resolves to 'ok' | 'too_many' | 'offline'.
+// Resolves to 'ok' | 'too_many' | 'offline'. A successful post clears the cache so the
+// new review shows up on the next fetch.
 export async function submitReview(review) {
   const res = await request('/reviews', { method: 'POST', body: JSON.stringify(review) })
-  if (res.ok) return 'ok'
+  if (res.ok) {
+    cache.clear()
+    return 'ok'
+  }
   if (res.status === 429) return 'too_many'
   return 'offline'
 }

@@ -53,7 +53,7 @@ A small **"Admin login"** button (lock icon) sits just above the dark-blue foote
 - counts of **total / today / pending / confirmed** appointment requests, with search by name or phone,
 - each request (name, phone, preferred date and time, reason, notes, when it was received),
 - **Confirm on WhatsApp**: opens WhatsApp to the patient with a ready confirmation message in the language they booked in (date, time, address, map link) and marks the request confirmed in the database.
-- **Ratings** tab: patient reviews from the website. New reviews stay hidden until you **Approve & show** them; you can also hide or delete them. Only approved reviews and their average appear on the site. **Add feedback received from a patient** lets the clinic enter genuine feedback given on WhatsApp, by phone, in person or on Google (with the patient's permission); it is shown with its source.
+- **Ratings** tab: patient reviews from the website. New reviews from the website are shown right away; you can hide or delete any of them. Only shown reviews and their average appear on the site. **Add feedback received from a patient** lets the clinic enter genuine feedback given on WhatsApp, by phone, in person or on Google (with the patient's permission); it is shown with its source.
 
 Opening the backend's own address (e.g. http://localhost:5000) shows a status page: database status, appointment/review counts and the list of API endpoints. Patient details are only in the admin panel.
 

@@ -83,9 +83,16 @@ const app = express()
 app.disable('x-powered-by')
 app.use(express.json({ limit: '10kb' }))
 
-// CORS: only the website's own address(es) may call this API.
-// CORS_ORIGIN is a comma-separated list, e.g. "https://purvaeyecare.in,http://localhost:5173".
-const allowedOrigins = new Set((process.env.CORS_ORIGIN ?? 'http://localhost:5173').split(',').map((o) => o.trim()).filter(Boolean))
+const allowedOrigins = new Set(
+  (process.env.CORS_ORIGIN ?? 'http://localhost:5173')
+    .split(',')
+    .map((o) => o.trim().replace(/\/+$/, ''))
+    .filter(Boolean)
+    .flatMap((o) => {
+      const m = o.match(/^https:\/\/(www\.)?(.+)$/)
+      return m ? [`https://${m[2]}`, `https://www.${m[2]}`] : [o]
+    }),
+)
 app.use((req, res, next) => {
   const origin = req.get('origin')
   if (origin && allowedOrigins.has(origin)) {
@@ -263,12 +270,12 @@ app.get('/api/reviews', requireDb, wrap(async (req, res) => {
   res.json({ average: count ? Math.round((total / count) * 10) / 10 : 0, count, distribution, reviews: list })
 }))
 
-// New reviews wait for the clinic's approval in the admin panel before they appear.
+// New reviews appear on the site straight away; the clinic can hide or delete them in the admin panel.
 app.post('/api/reviews', requireDb, wrap(async (req, res) => {
   const doc = parseReview(req.body ?? {})
   if (!doc) return res.status(400).json({ error: 'invalid' })
   if (!allowReview(req.ip)) return res.status(429).json({ error: 'too_many_reviews' })
-  await reviews.insertOne({ ...doc, place: str(req.body.place, 40), source: 'website', status: 'pending', createdAt: new Date() })
+  await reviews.insertOne({ ...doc, place: str(req.body.place, 40), source: 'website', status: 'approved', createdAt: new Date() })
   res.status(201).json({ ok: true })
 }))
 
@@ -365,7 +372,7 @@ const ENDPOINTS = [
   ['GET', '/api/health', 'Server and database status', 'public'],
   ['POST', '/api/appointments', 'Save an appointment request', 'public'],
   ['GET', '/api/reviews?limit=30', 'Approved reviews, average and star breakdown', 'public'],
-  ['POST', '/api/reviews', 'Submit a review (waits for approval)', 'public'],
+  ['POST', '/api/reviews', 'Submit a review (shown right away)', 'public'],
   ['POST', '/api/admin/login', 'Admin login, returns a short-lived token', 'public'],
   ['POST', '/api/admin/logout', 'End the admin session immediately', 'admin'],
   ['GET', '/api/admin/appointments', 'All appointment requests', 'admin'],

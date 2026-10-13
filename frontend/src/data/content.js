@@ -353,7 +353,7 @@ export const content = {
     call: { mr: 'माहितीसाठी कॉल करा', en: 'Call for details' },
   },
 
-  // Patient ratings. New reviews appear only after the clinic approves them in the admin panel.
+  // Patient ratings. New reviews appear right away; the clinic can hide them in the admin panel.
   reviews: {
     eyebrow: { mr: 'रुग्णांचे अभिप्राय', en: 'Patient Ratings' },
     title: { mr: 'आमच्या रुग्णांचा अनुभव', en: 'What our patients say' },
@@ -378,8 +378,8 @@ export const content = {
     },
     thanksTitle: { mr: 'धन्यवाद!', en: 'Thank you!' },
     thanksBody: {
-      mr: 'तुमचा अभिप्राय मिळाला. तपासणीनंतर तो वेबसाइटवर दिसेल.',
-      en: 'We received your review. It will appear on the site after a quick check.',
+      mr: 'तुमचा अभिप्राय मिळाला आणि तो आता वेबसाइटवर दिसत आहे.',
+      en: 'We received your review. It is now shown on the site.',
     },
     offlineBody: {
       mr: 'सध्या सर्व्हरशी संपर्क होत नाही. तुमचा अभिप्राय WhatsApp वर पाठवा.',
